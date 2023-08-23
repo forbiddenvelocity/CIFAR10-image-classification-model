@@ -36,24 +36,10 @@ for i in range(10,20,2):
 x_train = x_train/255
 x_test = x_test/255
 
-"""**Artificial Neural Network**"""
+"""**Artificial Neural Network**
 
-ann = models.Sequential([
-        layers.Flatten(input_shape=(32,32,3)),
-        layers.Dense(3000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(10, activation='softmax')
-    ])
-
-ann.compile(optimizer='SGD',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
-
-ann.fit(x_train, y_train, epochs=5)
-
-ann.summary()
-
-"""**Convolutional Neural Network**"""
+**Convolutional Neural Network**
+"""
 
 cnn = models.Sequential([
     layers.Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=(32, 32, 3)),
@@ -67,6 +53,8 @@ cnn = models.Sequential([
     layers.Dense(10, activation='softmax')
 ])
 
+cnn.summary()
+
 cnn.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
@@ -76,4 +64,18 @@ cnn.fit(x_train, y_train, epochs=10)
 """**Evaluating**"""
 
 cnn.evaluate(x_test,y_test)
+
+y_pred = cnn.predict(x_test)
+y_pred[:5]
+
+y_classes = [np.argmax(element) for element in y_pred]
+y_classes[:10]
+
+y_test[:10]
+
+y_test = y_test.reshape(-1,)
+
+imgplotter(x_test,y_test,6)
+
+classes[y_classes[6]]
 
